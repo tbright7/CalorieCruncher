@@ -2,7 +2,6 @@ import React from 'react';
 import AddUser from './AddUser.jsx';
 import UsersList from './UsersList.jsx';
 import CurrentUserInfo from './CurrentUserInfo.jsx';
-
 import axios from 'axios';
 
 
@@ -11,9 +10,10 @@ class App extends React.Component {
         super(props);
         this.state = {
             users: {},
-            currentUser: null
+            currentUser: null,
         }
         this.fetchUsers = this.fetchUsers.bind(this);
+        this.fetchWeight = this.fetchWeight.bind(this)
         this.addUser = this.addUser.bind(this)
         this.setCurrentUser = this.setCurrentUser.bind(this)
         this.updateCurrentUserWeight = this.updateCurrentUserWeight.bind(this)
@@ -33,19 +33,25 @@ class App extends React.Component {
                 console.log(error)
             });
     }
+    fetchWeight(user) {
+        axios.get('/weight/' + user.username)
+            .then(({ data }) => {
+                this.setState({
+                    currentUserWeight: data
+                })
+            })
+            .catch((error) => {
+                console.log(error)
+            });
+    }
     addUser(user) {
         axios.post('/users', user)
             .then(() => {
                 this.fetchUsers();
                 this.setState({
                     currentUser: user
-                })
+                }, () => {this.setCurrentUser(user)})
             })
-    }
-    setCurrentUser(user) {
-        this.setState({
-            currentUser: user
-        })
     }
     updateCurrentUserWeight(user, updatedWeight) {
         axios.put('/users', {
@@ -58,6 +64,19 @@ class App extends React.Component {
                     currentUser: user
                 })
             })
+    }
+    setCurrentUser(user) {
+        if (user) {
+            this.setState({
+                currentUser: user
+            }, () => {
+                this.fetchWeight(user)
+            })
+        } else {
+            this.setState({
+                currentUser: null
+            })
+        }
     }
 
     render() {
@@ -74,7 +93,8 @@ class App extends React.Component {
                     }
                 </div>
                 {this.state.currentUser !== null &&
-                    <CurrentUserInfo currentUser={this.state.currentUser} updateCurrentUserWeight={this.updateCurrentUserWeight} />}
+                    <CurrentUserInfo setCurrentUser={this.setCurrentUser} currentUserWeight={this.state.currentUserWeight} currentUser={this.state.currentUser} updateCurrentUserWeight={this.updateCurrentUserWeight} />
+                }
             </div>
 
         )

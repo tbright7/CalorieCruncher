@@ -15,7 +15,13 @@ app.get('/users', (req, res) => {
         res.send(result);
     })
 });
-
+app.get('/weight/:username', (req, res) => {
+    const username = req.params.username
+    var query = `select * from weights where username = '${username}'`;
+    db.getFromDB(query, (result) => {
+        res.send(result);
+    })
+});
 app.post('/users', (req, res) => {
     const usersValues = [`${req.body.username}`, req.body.age, req.body.weight, req.body.goal_weight, req.body.height, `${req.body.gender}`, req.body.activity_level];
     const usersQuery = `insert into users (username, age, weight, goal_weight, height, gender, activity_level) 

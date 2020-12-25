@@ -1,4 +1,6 @@
 import React from 'react';
+import WeightGraph from './WeightGraph.jsx';
+
 
 class CurrentUserInfo extends React.Component {
     constructor(props) {
@@ -6,31 +8,34 @@ class CurrentUserInfo extends React.Component {
         this.state = {}
         this.calculateCalories = this.calculateCalories.bind(this)
         this.handleChange = this.handleChange.bind(this)
+        this.handleClick = this.handleClick.bind(this)
     }
     calculateCalories(user) {
-        var goal = 1
-        if (this.props.currentUser.weight>this.props.currentUser.goal_weight){
-            goal = .9
-        }
-        if (this.props.currentUser.weight<this.props.currentUser.goal_weight){
-            goal = 1.1
-        }
-        if (this.props.currentUser.gender == -161) {
-            var calories = Math.round(((4.536 * this.props.currentUser.weight) + (15.88 * this.props.currentUser.height) - (5 * this.props.currentUser.age) - 161) * this.props.currentUser.activity_level)
-        } else {
-            var calories = Math.round(((4.536 * this.props.currentUser.weight) + (15.88 * this.props.currentUser.height) - (5 * this.props.currentUser.age) + this.props.currentUser.gender) * this.props.currentUser.activity_level)
-        }
-        return Math.round(calories*goal)
+        var genderAdjuster = parseInt(this.props.currentUser.gender)
+        var weight = this.props.currentUser.weight
+        var goalWeight = this.props.currentUser.goal_weight
+        var adjustCalorieToGoal = goalWeight/weight
+        var BMR = Math.round(((4.536 * weight) + (15.88 * this.props.currentUser.height) - (5 * this.props.currentUser.age) + genderAdjuster) * this.props.currentUser.activity_level)
+        
+        return Math.round(BMR*adjustCalorieToGoal)
     }
     handleChange(event) {
         this.setState({
             [event.target.name]: event.target.value
         })
     }
+    handleClick(user, state) {
+        if(this.state.hasOwnProperty('updatedWeight')){
+        this.props.updateCurrentUserWeight(user, state)
+        } else {
+            alert('weight must be filled in')
+        }
+    }
 
     render() {
         return (
             <div>
+                <button onClick={() => {this.props.setCurrentUser()}}>return to user selection</button>
                 <div>
                     Welcome {this.props.currentUser.username}
                 </div>
@@ -47,7 +52,10 @@ class CurrentUserInfo extends React.Component {
                     <input name='updatedWeight' type="number" placeholder='weight' onChange={this.handleChange} />
                 </div>
                 <div>
-                    <button onClick={() => {this.props.updateCurrentUserWeight(this.props.currentUser, this.state)}}> update your weight </button>
+                    <button onClick={() => {this.handleClick(this.props.currentUser, this.state)}}> update your weight </button>
+                </div>
+                <div>
+                    <WeightGraph currentUserWeight={this.props.currentUserWeight}/>
                 </div>
             </div>
         )

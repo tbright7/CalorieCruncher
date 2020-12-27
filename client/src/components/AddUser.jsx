@@ -46,7 +46,7 @@ class AddUser extends React.Component {
                     <input type='radio' name='gender' value={-161} onChange={this.handleChange} />Female
                     </div>
                     <div>
-                    <input type='radio' name='activity_level' value={1.2} onChange={this.handleChange} />Little excercise
+                    <input type='radio' name='activity_level' value={1.25} onChange={this.handleChange} />No excercise
                     <input type='radio' name='activity_level' value={1.375} onChange={this.handleChange} />Light excercise 
                     <input type='radio' name='activity_level' value={1.55} onChange={this.handleChange} />Moderately active
                     <input type='radio' name='activity_level' value={1.725} onChange={this.handleChange} />Very active

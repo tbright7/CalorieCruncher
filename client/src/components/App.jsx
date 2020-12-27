@@ -13,10 +13,11 @@ class App extends React.Component {
             currentUser: null,
         }
         this.fetchUsers = this.fetchUsers.bind(this);
-        this.fetchWeight = this.fetchWeight.bind(this)
-        this.addUser = this.addUser.bind(this)
-        this.setCurrentUser = this.setCurrentUser.bind(this)
-        this.updateCurrentUserWeight = this.updateCurrentUserWeight.bind(this)
+        this.fetchWeight = this.fetchWeight.bind(this);
+        this.addUser = this.addUser.bind(this);
+        this.setCurrentUser = this.setCurrentUser.bind(this);
+        this.updateCurrentUserWeight = this.updateCurrentUserWeight.bind(this);
+        this.deleteUser = this.deleteUser.bind(this);
     }
 
     componentDidMount() {
@@ -50,7 +51,14 @@ class App extends React.Component {
                 this.fetchUsers();
                 this.setState({
                     currentUser: user
-                }, () => {this.setCurrentUser(user)})
+                })
+                this.setCurrentUser(user)
+            })
+    }
+    deleteUser(user) {
+        axios.delete('/users/'+ user.username)
+            .then(() => {
+                this.fetchUsers();
             })
     }
     updateCurrentUserWeight(user, updatedWeight) {
@@ -88,7 +96,7 @@ class App extends React.Component {
                         <div>
                             <AddUser adduser={this.addUser} />
                             {this.state.users.length > 0 &&
-                                <UsersList users={this.state.users} setCurrentUser={this.setCurrentUser} />}
+                                <UsersList users={this.state.users} setCurrentUser={this.setCurrentUser} deleteUser ={this.deleteUser}/>}
                         </div>
                     }
                 </div>

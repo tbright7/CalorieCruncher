@@ -14,10 +14,10 @@ class CurrentUserInfo extends React.Component {
         var genderAdjuster = parseInt(this.props.currentUser.gender)
         var weight = this.props.currentUser.weight
         var goalWeight = this.props.currentUser.goal_weight
-        var adjustCalorieToGoal = goalWeight/weight
+        var adjustCalorieToGoal = goalWeight / weight
         var BMR = Math.round(((4.536 * weight) + (15.88 * this.props.currentUser.height) - (5 * this.props.currentUser.age) + genderAdjuster) * this.props.currentUser.activity_level)
-        
-        return Math.round(BMR*adjustCalorieToGoal)
+
+        return Math.round(BMR * adjustCalorieToGoal)
     }
     handleChange(event) {
         this.setState({
@@ -25,8 +25,8 @@ class CurrentUserInfo extends React.Component {
         })
     }
     handleClick(user, state) {
-        if(this.state.hasOwnProperty('updatedWeight')){
-        this.props.updateCurrentUserWeight(user, state)
+        if (this.state.hasOwnProperty('updatedWeight')) {
+            this.props.updateCurrentUserWeight(user, state)
         } else {
             alert('weight must be filled in')
         }
@@ -35,7 +35,7 @@ class CurrentUserInfo extends React.Component {
     render() {
         return (
             <div>
-                <button onClick={() => {this.props.setCurrentUser()}}>return to user selection</button>
+                <button onClick={() => { this.props.setCurrentUser() }}>return to user selection</button>
                 <div>
                     Welcome {this.props.currentUser.username}
                 </div>
@@ -52,11 +52,13 @@ class CurrentUserInfo extends React.Component {
                     <input name='updatedWeight' type="number" placeholder='weight' onChange={this.handleChange} />
                 </div>
                 <div>
-                    <button onClick={() => {this.handleClick(this.props.currentUser, this.state)}}> update your weight </button>
+                    <button onClick={() => { this.handleClick(this.props.currentUser, this.state) }}> update your weight </button>
                 </div>
-                <div>
-                    <WeightGraph currentUserWeight={this.props.currentUserWeight}/>
-                </div>
+                {this.props.currentUserWeight &&
+                    <div>
+                        <WeightGraph currentUserWeight={this.props.currentUserWeight} />
+                    </div>
+                }
             </div>
         )
     }

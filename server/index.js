@@ -55,7 +55,16 @@ app.put('/users', (req, res) => {
         res.status(201).send('weight was added!');
     })
 });
-
+app.delete('/users/:username', (req, res) => {
+    const query = `delete from users where username = '${req.params.username}'`;
+    db.getFromDB(query, (result) => {
+      console.log('deleted from users')
+    })
+    const weightsQuery = `delete from weights where username = '${req.params.username}'`;
+    db.getFromDB(weightsQuery, (result) => {
+        res.send(result);
+    })
+});
 app.listen(port, () => {
     console.log(`Listening at http://localhost:${port}`)
 })

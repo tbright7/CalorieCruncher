@@ -22,9 +22,6 @@ PRIMARY KEY(id)
 CREATE TABLE weights (
 id serial unique,
 username varchar,
-CONSTRAINT users
-      FOREIGN KEY(username) 
-	  REFERENCES users(username),
 weight int,
 date date,
 UNIQUE(id),

@@ -11,10 +11,10 @@ id serial,
 username varchar,
 age int,
 weight int,
-goal_weight int,
+goalWeight int,
 height int,
 gender varchar, 
-activity_level varchar, 
+activitylevel varchar, 
 UNIQUE(username),
 PRIMARY KEY(id)
 );

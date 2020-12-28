@@ -1,12 +1,13 @@
 import React from 'react';
 import WeightGraph from './WeightGraph.jsx';
-import UpdateUser from './UpdateUser.jsx';
+import CaloriePieChart from './CaloriePieChart.jsx';
 
 
 class CurrentUserInfo extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            calories: null
         }
         this.calculateCalories = this.calculateCalories.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -14,12 +15,9 @@ class CurrentUserInfo extends React.Component {
         this.updateProfile= this.updateProfile.bind(this);
     }
     calculateCalories(user) {
-        var genderAdjuster = parseInt(this.props.currentUser.gender);
-        var weight = this.props.currentUser.weight;
-        var goalWeight = this.props.currentUser.goal_weight;
-        var adjustCalorieToGoal = goalWeight / weight;
-        var BMR = Math.round(((4.536 * weight) + (15.88 * this.props.currentUser.height) - (5 * this.props.currentUser.age) + genderAdjuster) * this.props.currentUser.activity_level);
-
+        var genderAdjuster = parseInt(user.gender);
+        var adjustCalorieToGoal = user.goalweight / user.weight;
+        var BMR = ((4.536 * user.weight) + (15.88 * user.height) - (5 * user.age) + genderAdjuster) * user.activitylevel;
         return Math.round(BMR * adjustCalorieToGoal);
     }
     handleChange(event) {
@@ -43,7 +41,7 @@ class CurrentUserInfo extends React.Component {
     render() {
         return (
             <div>
-                <button onClick={() => { this.props.setCurrentUser() }}>return to user selection</button>
+                <button onClick={() => { this.props.setCurrentUser() }}>Return to user selection</button>
                 <div>
                     Welcome {this.props.currentUser.username}
                 </div>
@@ -51,22 +49,25 @@ class CurrentUserInfo extends React.Component {
                     Your last recorded weight was {this.props.currentUser.weight}lbs
                 </div>
                 <div>
-                    Your goal weight is {this.props.currentUser.goal_weight}lbs
+                    Your goal weight is {this.props.currentUser.goalweight}lbs
                 </div>
                 <div>
                     Your daily caloric goal is  {this.calculateCalories(this.props.currentUser)}
                 </div>
                 <div>
-                    <input name='updatedWeight' type="number" placeholder='weight' onChange={this.handleChange} />
+                    <input name='updatedWeight' type="number" placeholder='Current weight' onChange={this.handleChange} />
                 </div>
                 <div>
-                    <button onClick={() => { this.handleClick(this.props.currentUser, this.state) }}> update your weight </button>
+                    <button onClick={() => { this.handleClick(this.props.currentUser, this.state) }}> Update your weight </button>
                 </div>
                 {this.props.currentUserWeight &&
                     <div>
                         <WeightGraph currentUserWeight={this.props.currentUserWeight} />
                     </div>
                 }
+                <div>
+                    <CaloriePieChart calculateCalories ={this.calculateCalories} currentUser = {this.props.currentUser}/>
+                </div>
             </div>
         )
     }

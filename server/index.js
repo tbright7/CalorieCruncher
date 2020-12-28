@@ -23,8 +23,8 @@ app.get('/weight/:username', (req, res) => {
     })
 });
 app.post('/users', (req, res) => {
-    const usersValues = [`${req.body.username}`, req.body.age, req.body.weight, req.body.goal_weight, req.body.height, `${req.body.gender}`, req.body.activity_level];
-    const usersQuery = `insert into users (username, age, weight, goal_weight, height, gender, activity_level) 
+    const usersValues = [`${req.body.username}`, req.body.age, req.body.weight, req.body.goalweight, req.body.height, `${req.body.gender}`, req.body.activitylevel];
+    const usersQuery = `insert into users (username, age, weight, goalweight, height, gender, activitylevel) 
     VALUES ($1, $2, $3, $4, $5, $6, $7);`
     db.insertIntoDB(usersQuery, usersValues, (result) => {
         console.log('user was added!');
@@ -40,8 +40,8 @@ app.post('/users', (req, res) => {
 })
 
 app.put('/users', (req, res) => {
-    const usersValues = [`${req.body.username}`, req.body.age, req.body.weight, req.body.goal_weight, req.body.height, `${req.body.gender}`, req.body.activity_level];
-    const usersQuery = `update users set username = ($1), age = ($2), weight = ($3), goal_weight =( $4), height = ($5), gender = ($6), activity_level = ($7) where id = ${req.body.id}`
+    const usersValues = [`${req.body.username}`, req.body.age, req.body.weight, req.body.goalweight, req.body.height, `${req.body.gender}`, req.body.activitylevel];
+    const usersQuery = `update users set username = ($1), age = ($2), weight = ($3), goalweight =( $4), height = ($5), gender = ($6), activitylevel = ($7) where id = ${req.body.id}`
     db.insertIntoDB(usersQuery, usersValues, (result) => {
         console.log('user was updated!');
     })

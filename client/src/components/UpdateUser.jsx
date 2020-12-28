@@ -8,10 +8,10 @@ class UpdateUser extends React.Component {
             username: this.props.userToUpdate.username,
             age: this.props.userToUpdate.age,
             weight: this.props.userToUpdate.weight,
-            goal_weight: this.props.userToUpdate.goal_weight,
+            goalweight: this.props.userToUpdate.goalweight,
             height: this.props.userToUpdate.height,
             gender: this.props.userToUpdate.gender,
-            activity_level: this.props.userToUpdate.activity_level
+            activitylevel: this.props.userToUpdate.activitylevel
 
         }
         this.handleChange = this.handleChange.bind(this);
@@ -42,7 +42,7 @@ class UpdateUser extends React.Component {
                             <input name='weight' type="number" placeholder={this.props.userToUpdate.weight} onChange={this.handleChange} />
                         </div>
                         <div>
-                            <input name='goal_weight' type="number" placeholder={this.props.userToUpdate.goal_weight} onChange={this.handleChange} />
+                            <input name='goalweight' type="number" placeholder={this.props.userToUpdate.goalweight} onChange={this.handleChange} />
                         </div>
                         <div>
                             <input name='height' type="number" placeholder={this.props.userToUpdate.height} min={36} max={99} onChange={this.handleChange} />
@@ -52,11 +52,11 @@ class UpdateUser extends React.Component {
                     <input type='radio' name='gender' value={-161} onChange={this.handleChange} />Female
                     </div>
                         <div>
-                            <input type='radio' name='activity_level' value={1.25} onChange={this.handleChange} />No excercise
-                    <input type='radio' name='activity_level' value={1.375} onChange={this.handleChange} />Light excercise
-                    <input type='radio' name='activity_level' value={1.55} onChange={this.handleChange} />Moderately active
-                    <input type='radio' name='activity_level' value={1.725} onChange={this.handleChange} />Very active
-                    <input type='radio' name='activity_level' value={1.9} onChange={this.handleChange} />Extremely active
+                            <input type='radio' name='activitylevel' value={1.25} onChange={this.handleChange} />No excercise
+                    <input type='radio' name='activitylevel' value={1.375} onChange={this.handleChange} />Light excercise
+                    <input type='radio' name='activitylevel' value={1.55} onChange={this.handleChange} />Moderately active
+                    <input type='radio' name='activitylevel' value={1.725} onChange={this.handleChange} />Very active
+                    <input type='radio' name='activitylevel' value={1.9} onChange={this.handleChange} />Extremely active
                     </div>
                     </div>
                 }

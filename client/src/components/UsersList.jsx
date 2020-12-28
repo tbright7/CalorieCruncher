@@ -37,7 +37,7 @@ class UsersList extends React.Component {
                                     {user.username}
                                 </button>
                                 <button onClick={() => { this.props.updateProfile(user) }}>Update Profile</button>
-                                <button onClick={() => { this.props.deleteUser(user) }}>delete profile</button>
+                                <button onClick={() => { this.props.deleteUser(user) }}>Delete profile</button>
                             </div>
                         ))
                     }

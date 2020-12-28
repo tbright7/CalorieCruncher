@@ -2,6 +2,7 @@ import React from 'react';
 import AddUser from './AddUser.jsx';
 import UsersList from './UsersList.jsx';
 import CurrentUserInfo from './CurrentUserInfo.jsx';
+import UpdateUser from './UpdateUser.jsx';
 import axios from 'axios';
 
 
@@ -11,6 +12,8 @@ class App extends React.Component {
         this.state = {
             users: {},
             currentUser: null,
+            updateProfile: false,
+            userToUpdate: null
         }
         this.fetchUsers = this.fetchUsers.bind(this);
         this.fetchWeight = this.fetchWeight.bind(this);
@@ -18,6 +21,8 @@ class App extends React.Component {
         this.setCurrentUser = this.setCurrentUser.bind(this);
         this.updateCurrentUserWeight = this.updateCurrentUserWeight.bind(this);
         this.deleteUser = this.deleteUser.bind(this);
+        this.updateProfile = this.updateProfile.bind(this);
+        this.updateUser = this.updateUser.bind(this);
     }
 
     componentDidMount() {
@@ -55,14 +60,26 @@ class App extends React.Component {
                 this.setCurrentUser(user)
             })
     }
+
+    updateUser(user) {
+        axios.put('/users', user)
+            .then(() => {
+                this.fetchUsers();
+                this.setState({
+                    currentUser: user
+                })
+                this.setCurrentUser(user)
+            })
+    }
+
     deleteUser(user) {
-        axios.delete('/users/'+ user.username)
+        axios.delete('/users/' + user.username)
             .then(() => {
                 this.fetchUsers();
             })
     }
     updateCurrentUserWeight(user, updatedWeight) {
-        axios.put('/users', {
+        axios.patch('/users', {
             user: user,
             weight: updatedWeight
         })
@@ -86,22 +103,44 @@ class App extends React.Component {
             })
         }
     }
+    updateProfile(user) {
+        if (user) {
+            this.setState({
+                updateProfile: !this.state.UpdateUser,
+                userToUpdate: user
+            })
+        }
+        else {
+            this.setState({
+                updateProfile: !this.state.UpdateUser,
+                userToUpdate: null
+            })
+        }
+    }
 
     render() {
         return (
             <div>
                 <div>
-
-                    {this.state.currentUser === null &&
-                        <div>
-                            <AddUser adduser={this.addUser} />
-                            {this.state.users.length > 0 &&
-                                <UsersList users={this.state.users} setCurrentUser={this.setCurrentUser} deleteUser ={this.deleteUser}/>}
-                        </div>
+                    <div>
+                        {this.state.currentUser === null &&
+                            <div>
+                                {this.state.updateProfile === false &&
+                                    <div>
+                                        <AddUser adduser={this.addUser} />
+                                        {this.state.users.length > 0 &&
+                                            <UsersList users={this.state.users} setCurrentUser={this.setCurrentUser} deleteUser={this.deleteUser} updateProfile={this.updateProfile} />}
+                                    </div>
+                                }
+                            </div>
+                        }
+                    </div>
+                    {this.state.currentUser !== null &&
+                        <CurrentUserInfo setCurrentUser={this.setCurrentUser} currentUserWeight={this.state.currentUserWeight} currentUser={this.state.currentUser} updateCurrentUserWeight={this.updateCurrentUserWeight} />
                     }
                 </div>
-                {this.state.currentUser !== null &&
-                    <CurrentUserInfo setCurrentUser={this.setCurrentUser} currentUserWeight={this.state.currentUserWeight} currentUser={this.state.currentUser} updateCurrentUserWeight={this.updateCurrentUserWeight} />
+                {this.state.updateProfile !== false &&
+                    <UpdateUser updateProfile = {this.updateProfile} updateUser={this.updateUser} userToUpdate={this.state.userToUpdate} />
                 }
             </div>
 

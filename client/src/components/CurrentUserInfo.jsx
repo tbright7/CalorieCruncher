@@ -1,35 +1,43 @@
 import React from 'react';
 import WeightGraph from './WeightGraph.jsx';
+import UpdateUser from './UpdateUser.jsx';
 
 
 class CurrentUserInfo extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {}
-        this.calculateCalories = this.calculateCalories.bind(this)
-        this.handleChange = this.handleChange.bind(this)
-        this.handleClick = this.handleClick.bind(this)
+        this.state = {
+        }
+        this.calculateCalories = this.calculateCalories.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.handleClick = this.handleClick.bind(this);
+        this.updateProfile= this.updateProfile.bind(this);
     }
     calculateCalories(user) {
-        var genderAdjuster = parseInt(this.props.currentUser.gender)
-        var weight = this.props.currentUser.weight
-        var goalWeight = this.props.currentUser.goal_weight
-        var adjustCalorieToGoal = goalWeight / weight
-        var BMR = Math.round(((4.536 * weight) + (15.88 * this.props.currentUser.height) - (5 * this.props.currentUser.age) + genderAdjuster) * this.props.currentUser.activity_level)
+        var genderAdjuster = parseInt(this.props.currentUser.gender);
+        var weight = this.props.currentUser.weight;
+        var goalWeight = this.props.currentUser.goal_weight;
+        var adjustCalorieToGoal = goalWeight / weight;
+        var BMR = Math.round(((4.536 * weight) + (15.88 * this.props.currentUser.height) - (5 * this.props.currentUser.age) + genderAdjuster) * this.props.currentUser.activity_level);
 
-        return Math.round(BMR * adjustCalorieToGoal)
+        return Math.round(BMR * adjustCalorieToGoal);
     }
     handleChange(event) {
         this.setState({
             [event.target.name]: event.target.value
-        })
+        });
     }
     handleClick(user, state) {
         if (this.state.hasOwnProperty('updatedWeight')) {
-            this.props.updateCurrentUserWeight(user, state)
+            this.props.updateCurrentUserWeight(user, state);
         } else {
-            alert('weight must be filled in')
+            alert('weight must be filled in');
         }
+    }
+    updateProfile() {
+        this.setState({
+            updateProfile: true
+        });
     }
 
     render() {

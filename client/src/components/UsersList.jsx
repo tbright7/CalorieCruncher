@@ -22,6 +22,7 @@ class UsersList extends React.Component {
             currentUser: user
         })
     }
+
     render() {
         return (
             <div>
@@ -30,12 +31,13 @@ class UsersList extends React.Component {
                     {this.state.showUsers === true &&
                         this.props.users.map((user) => (
                             <div key={user.id}>
-                                <button 
-                                onClick={() => {this.props.setCurrentUser(user)}}
+                                <button
+                                    onClick={() => { this.props.setCurrentUser(user) }}
                                 >
-                                {user.username}
+                                    {user.username}
                                 </button>
-                                <button onClick={() => {this.props.deleteUser(user)}}>delete profile</button>
+                                <button onClick={() => { this.props.updateProfile(user) }}>Update Profile</button>
+                                <button onClick={() => { this.props.deleteUser(user) }}>delete profile</button>
                             </div>
                         ))
                     }

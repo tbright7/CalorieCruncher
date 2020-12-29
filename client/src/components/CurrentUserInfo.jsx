@@ -7,7 +7,7 @@ class CurrentUserInfo extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            calories: null
+            calories: this.calculateCalories(this.props.currentUser)
         }
         this.calculateCalories = this.calculateCalories.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -52,7 +52,7 @@ class CurrentUserInfo extends React.Component {
                     Your goal weight is {this.props.currentUser.goalweight}lbs
                 </div>
                 <div>
-                    Your daily caloric goal is  {this.calculateCalories(this.props.currentUser)}
+                    Your daily caloric goal is  {this.state.calories}
                 </div>
                 <div>
                     <input name='updatedWeight' type="number" placeholder='Current weight' onChange={this.handleChange} />
@@ -66,7 +66,7 @@ class CurrentUserInfo extends React.Component {
                     </div>
                 }
                 <div>
-                    <CaloriePieChart calculateCalories ={this.calculateCalories} currentUser = {this.props.currentUser}/>
+                    <CaloriePieChart calories={this.state.calories} currentUser = {this.props.currentUser}/>
                 </div>
             </div>
         )

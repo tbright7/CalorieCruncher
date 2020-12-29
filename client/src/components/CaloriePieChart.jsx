@@ -21,15 +21,15 @@ class CaloriePieChart extends React.Component {
         return gramsOfProtein;
     }
     calculateCaloriesFromFat() {
-        var gramsOfFat = (this.props.calculateCalories(this.props.currentUser))*.3
+        var gramsOfFat = (this.props.calories)*.3
         if (this.props.currentUser.weight > this.props.currentUser.goalweight) {
-            gramsOfFat = (this.props.calculateCalories(this.props.currentUser))*.2
+            gramsOfFat = (this.props.calories)*.2
         }
         return gramsOfFat;
     }
     calculateCaloriesFromCarbs() {
         var caloriesInOneGramOfProtein = 4;
-        var totalCalories = this.props.calculateCalories(this.props.currentUser)
+        var totalCalories = this.props.calories
         var carbs = totalCalories - (this.calculateGramsOfProtien()*caloriesInOneGramOfProtein) - this.calculateCaloriesFromFat()
         return carbs;
     }

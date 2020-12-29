@@ -1,7 +1,8 @@
 import React from 'react';
 import WeightGraph from './WeightGraph.jsx';
 import CaloriePieChart from './CaloriePieChart.jsx';
-
+import MealPlan from './MealPlan.jsx';
+import axios from 'axios';
 
 class CurrentUserInfo extends React.Component {
     constructor(props) {
@@ -12,8 +13,25 @@ class CurrentUserInfo extends React.Component {
         this.calculateCalories = this.calculateCalories.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleClick = this.handleClick.bind(this);
-        this.updateProfile= this.updateProfile.bind(this);
+        this.updateProfile = this.updateProfile.bind(this);
+        this.fetchMealPlan = this.fetchMealPlan.bind(this);
     }
+    fetchMealPlan() {
+        var req = `https://api.spoonacular.com/mealplanner/generate?timeFrame=day&targetCalories=${this.state.calories}&apiKey=32a96cb976764a9689a12cbc67d0ab2c`
+        axios.get(req)
+            .then(({ data }) => {
+                this.setState({
+                    mealPlan: data
+                }, () => {console.log(this.state.mealPlan)})
+            })
+            .catch((error) => {
+                console.log(error)
+            });
+    }
+    componentDidMount() {
+        this.fetchMealPlan()
+    }
+
     calculateCalories(user) {
         var genderAdjuster = parseInt(user.gender);
         var adjustCalorieToGoal = user.goalweight / user.weight;
@@ -66,7 +84,10 @@ class CurrentUserInfo extends React.Component {
                     </div>
                 }
                 <div>
-                    <CaloriePieChart calories={this.state.calories} currentUser = {this.props.currentUser}/>
+                    <CaloriePieChart calories={this.state.calories} currentUser={this.props.currentUser} />
+                </div>
+                <div>
+                    <MealPlan mealPlan = {this.state.mealPlan} />
                 </div>
             </div>
         )

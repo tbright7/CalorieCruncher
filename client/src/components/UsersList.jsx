@@ -1,6 +1,4 @@
 import React from 'react';
-import { Dropdown, DropdownButton, ButtonGroup } from 'react-bootstrap';
-import PropTypes from 'prop-types';
 
 class UsersList extends React.Component {
     constructor(props) {
@@ -16,6 +14,7 @@ class UsersList extends React.Component {
         this.setState({
             showUsers: !this.state.showUsers
         })
+        this.props.updateProfile()
     }
     setCurrentUser(user) {
         this.setState({
@@ -26,18 +25,18 @@ class UsersList extends React.Component {
     render() {
         return (
             <div>
-                <button onClick={this.showUsers}>Show Users List</button>
-                <div>
+                <div id="showUsers">
+                <button id="showUsers" onClick={this.showUsers}>Sign In</button>
+                </div>
+                <div id = "list">
                     {this.state.showUsers === true &&
                         this.props.users.map((user) => (
                             <div key={user.id}>
-                                <button
-                                    onClick={() => { this.props.setCurrentUser(user) }}
-                                >
+                                <button id = "userListUsername" onClick={() => { this.props.setCurrentUser(user) }}>
                                     {user.username}
                                 </button>
-                                <button onClick={() => { this.props.updateProfile(user) }}>Update Profile</button>
-                                <button onClick={() => { this.props.deleteUser(user) }}>Delete profile</button>
+                                <button id = "userListUpdate" onClick={() => { this.props.updateProfile(user, this.showUsers)}}>Update Profile</button>
+                                <button id = "userListDelete" onClick={() => { this.props.deleteUser(user) }}>Delete profile</button>
                             </div>
                         ))
                     }

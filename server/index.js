@@ -40,18 +40,10 @@ app.post('/users', (req, res) => {
 })
 
 app.put('/users', (req, res) => {
-    const usersValues = [`${req.body.username}`, req.body.age, req.body.weight, req.body.goalweight, req.body.height, `${req.body.gender}`, req.body.activitylevel];
-    const usersQuery = `update users set username = ($1), age = ($2), weight = ($3), goalweight =( $4), height = ($5), gender = ($6), activitylevel = ($7) where id = ${req.body.id}`
+    const usersValues = [req.body.age, req.body.weight, req.body.goalweight, req.body.height, `${req.body.gender}`, req.body.activitylevel];
+    const usersQuery = `update users set age = ($1), weight = ($2), goalweight =($3), height = ($4), gender = ($5), activitylevel = ($6) where id = ${req.body.id}`
     db.insertIntoDB(usersQuery, usersValues, (result) => {
-        console.log('user was updated!');
-    })
-    var date = new Date
-    var date = date.toDateString()
-    const weightsValues = [req.body.username, req.body.weight, date]
-    const weightsQuery = `insert into weights (username, weight, date)
-    VALUES ($1, $2, $3)`
-    db.insertIntoDB(weightsQuery, weightsValues, (result) => {
-        res.status(201).send('weight was added!');
+        res.status(201).send('user was updated!');
     })
 })
 

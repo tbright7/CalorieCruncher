@@ -11,16 +11,21 @@ class UpdateUser extends React.Component {
             goalweight: this.props.userToUpdate.goalweight,
             height: this.props.userToUpdate.height,
             gender: this.props.userToUpdate.gender,
-            activitylevel: this.props.userToUpdate.activitylevel
-
+            activitylevel: 1.25,
         }
         this.handleChange = this.handleChange.bind(this);
-        this.handleClick = this.handleClick.bind(this)
+        this.handleClick = this.handleClick.bind(this);
+        this.handleSelectChange = this.handleSelectChange.bind(this)
     }
     handleChange(event) {
         this.setState({
             [event.target.name]: event.target.value
         }, () => { console.log(this.state) })
+    }
+    handleSelectChange(event) {
+        this.setState({
+            activitylevel: event.target.value
+        }, () => { console.log(this.state.activitylevel) })
     }
     handleClick() {
         this.props.updateUser(this.state)
@@ -30,37 +35,36 @@ class UpdateUser extends React.Component {
     render() {
         return (
             <div>
+                Update {this.props.userToUpdate.username}'s information
                 {this.props.userToUpdate !== null &&
                     <div>
-                        <div>
-                            <input name='username' type='text' placeholder={this.props.userToUpdate.username} onChange={this.handleChange} />
+                        {this.props.fields.map((field) =>
+                            <div id={field.name} key={field.name}>
+                                <input
+                                    className="fieldInput"
+                                    name={field.name}
+                                    type={field.type}
+                                    placeholder={this.state[field.name]}
+                                    onChange={this.handleChange} />
+                            </div>)}
+                        <div id="activitylevel">
+                            <select className="fieldInput" onChange={this.handleSelectChange} >
+                                {this.props.activityLevels.map((activityLevel) => (
+                                    <option key={activityLevel.value} 
+                                        name='activitylevel' value={activityLevel.value}>{activityLevel.level}</option>
+                                ))}
+                            </select>
                         </div>
-                        <div>
-                            <input name='age' type="number" placeholder={this.props.userToUpdate.age} onChange={this.handleChange} />
-                        </div>
-                        <div>
-                            <input name='weight' type="number" placeholder={this.props.userToUpdate.weight} onChange={this.handleChange} />
-                        </div>
-                        <div>
-                            <input name='goalweight' type="number" placeholder={this.props.userToUpdate.goalweight} onChange={this.handleChange} />
-                        </div>
-                        <div>
-                            <input name='height' type="number" placeholder={this.props.userToUpdate.height} min={36} max={99} onChange={this.handleChange} />
-                        </div>
-                        <div>
+                        <div id="gender">
                             <input type='radio' name='gender' value={5} onChange={this.handleChange} />Male
-                    <input type='radio' name='gender' value={-161} onChange={this.handleChange} />Female
-                    </div>
-                        <div>
-                            <input type='radio' name='activitylevel' value={1.25} onChange={this.handleChange} />No excercise
-                    <input type='radio' name='activitylevel' value={1.375} onChange={this.handleChange} />Light excercise
-                    <input type='radio' name='activitylevel' value={1.55} onChange={this.handleChange} />Moderately active
-                    <input type='radio' name='activitylevel' value={1.725} onChange={this.handleChange} />Very active
-                    <input type='radio' name='activitylevel' value={1.9} onChange={this.handleChange} />Extremely active
-                    </div>
+                            <input type='radio' name='gender' value={-161} onChange={this.handleChange} />Female
+                        </div>
                     </div>
                 }
-                <button onClick={this.handleClick}>Update User</button>
+                <button id ="button" onClick={this.handleClick}>Update User</button>
+                <div>
+                <button id ="button" onClick={() => { this.props.updateProfile() }}> Cancel</button>
+                </div>
             </div>
         )
     }

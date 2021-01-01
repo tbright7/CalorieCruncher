@@ -10,6 +10,7 @@ class MealPlan extends React.Component {
     render() {
         return (
             <div>
+                Today's Meals:
                 {this.props.mealPlan !== undefined &&
                     <div>
                         <ul className="meals">
@@ -27,7 +28,6 @@ class MealPlan extends React.Component {
                         <div> Grams of protein: {this.props.mealPlan.nutrients.protein} </div>
                         <div> Grams of carbs: {this.props.mealPlan.nutrients.carbohydrates} </div>
                         <div> Grams of fat: {this.props.mealPlan.nutrients.fat} </div>
-
                     </div>
                 }
             </div>

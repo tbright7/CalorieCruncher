@@ -12,6 +12,7 @@ class WeightGraph extends React.Component {
         var data = [['x', 'weight']]
         for (var i = 0; i < this.props.currentUserWeight.length; i++) {
             var date = this.props.currentUserWeight[i].date
+            var date= date.slice(0, 10)
             var weight = this.props.currentUserWeight[i].weight
             data.push([date, weight])
         }
@@ -20,25 +21,33 @@ class WeightGraph extends React.Component {
 
     render() {
         return (
-            <div>
-            {this.props.currentUserWeight !== undefined &&
+            <div id ="lineGraph">
+                {this.props.currentUserWeight !== undefined &&
                     <Chart
-                        width={'600px'}
-                        height={'400px'}
+                    width={'500px'}
+                    height={'300px'}
                         chartType="LineChart"
                         loader={<div>Loading Chart</div>}
                         data={this.populateData()}
                         options={{
+                            title: `${this.props.currentUser.username}'s weight history`,
+
                             hAxis: {
                                 title: 'Weigh-ins',
                             },
                             vAxis: {
                                 title: 'Weight in lbs',
                             },
+                            backgroundColor: '#3ba3c2',
+                            strokeWidth: 1,
+                            // x-radius of the corner curvature.
+                            rx: 10,
+                            // y-radius of the corner curvature.
+                            ry: 10,
                         }}
                         rootProps={{ 'data-testid': '1' }}
                     />
-            }
+                }
             </div>
         )
     }

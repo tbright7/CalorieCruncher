@@ -1,0 +1,150 @@
+#button{
+    box-shadow: 3px 4px 0px 0px #899599;
+	background:linear-gradient(to bottom, #ededed 5%, #bab1ba 100%);
+	background-color:#ededed;
+	border-radius:10px;
+	border:1px solid #d6bcd6;
+	display:inline-block;
+	cursor:pointer;
+	color: black;
+	font-family:Arial;
+	font-size:17px;
+	padding:7px 25px;
+	text-decoration:none;
+    text-shadow:0px 1px 0px #e1e2ed;
+    outline: none;
+    margin-top: 5px;
+    width: 170px;
+}
+#addUserBtn:hover{
+    background:linear-gradient(to bottom, #bab1ba 5%, #ededed 100%);
+	background-color:#bab1ba;
+}
+#addUserBtn:active{
+    position:relative;
+	top:1px;
+}
+#showUsers{
+    border-radius: 0px;
+    outline: none;
+    background:linear-gradient(to bottom, #3799b6 5%, #37bcf3 100%);
+    border: none;
+    height: 50px;
+    font-size: 20px;
+    font-family: arial;
+}
+#showUsers:hover{
+    font-weight: 900;
+}
+#body{
+    background-color: #338ea9	;
+    position: absolute;
+    top: 0px;
+    bottom: 0px; 
+    left: 0px;
+    right: 0px;
+    width: 100%;
+    font-size: 20px;   
+    font-family: arial;
+
+}
+#lineGraph {
+    position: absolute;
+  margin-left: 465px;
+ margin-top: -70px;
+ border-radius: 10px;
+}
+#pieChart {
+    margin-left: 465px;
+    margin-top: 85px;
+    position: absolute;
+}
+#mealPlan{
+    margin-left: 440px;
+    width: 480px;
+    background-color: #3ba3c2;
+    position: absolute;
+    margin-top: -140px;
+}
+#userInfo{
+    background-color: #3ba3c2;
+    margin-top: 10px;
+    width: 420px;
+    margin-left:10px;
+}
+#addUser{
+    margin-top: 200px;
+    display: flex;
+    justify-content: center;
+}
+#updateUser{
+    margin-top: 200px;
+    display: flex;
+    justify-content: center;
+}
+#userListUsername{
+    border-radius: 0px;
+    border: none;
+    width: 100px;
+    font-size: 16px;
+    margin-bottom: 0px;
+    background: none;
+}
+#userListUsername:hover{
+    font-weight: 900;
+}
+#userListUpdate{
+    border-radius: 0px;
+    border: none;
+    font-size: 16px;
+    margin-bottom: 0px;
+    background: none;
+}
+#userListUpdate:hover{
+    font-weight: 900;
+}
+#userListDelete{
+    border-radius: 0px;
+    border: none;
+    font-size: 16px;
+    margin-bottom: 0px;
+    background: none;
+}
+#userListDelete:hover{
+    font-weight: 900;
+}
+#list {
+    background:linear-gradient(to bottom, #37bcf3 5%, #3799b6 100%);
+    width: 330px;
+    z-index: 5;
+}
+.fieldInput{
+    padding: 5px;
+     font-size: 20px;
+     border-width: 0px;
+     border-color: #CCCCCC;
+     background-color: #FFFFFF;
+     color: #000000;
+     border-radius: 10px;
+     box-shadow: 0px 3px 5px rgba(66,66,66,.75);
+     text-shadow: 0px 0px 0px rgba(66,66,66,.75);
+     margin-top: 2px;
+     margin-bottom: 2px;
+     width:160px;
+     outline:none;
+
+}
+.fieldInput:focus{
+    outline:none;
+
+}
+#gender{
+    font-family: arial;
+    display: block;
+    position: relative;
+    padding-left: 5px;
+    margin-bottom: 5px;
+    padding-top: 5px;
+    cursor: pointer;
+    font-size: 20px;   
+}

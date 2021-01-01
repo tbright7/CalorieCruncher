@@ -8,13 +8,18 @@ class CurrentUserInfo extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            calories: this.calculateCalories(this.props.currentUser)
+            calories: this.calculateCalories(this.props.currentUser),
+            protein: this.calculateGramsOfProtien(this.props.currentUser, this.calculateCalories(this.props.currentUser)),
+            fat: this.calculateCaloriesFromFat(this.props.currentUser, this.calculateCalories(this.props.currentUser)),
+            carbs: this.calculateCaloriesFromCarbs(this.calculateCalories(this.props.currentUser), this.calculateGramsOfProtien(this.props.currentUser, this.calculateCalories(this.props.currentUser)), this.calculateCaloriesFromFat(this.props.currentUser, this.calculateCalories(this.props.currentUser)))
         }
-        this.calculateCalories = this.calculateCalories.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleClick = this.handleClick.bind(this);
         this.updateProfile = this.updateProfile.bind(this);
         this.fetchMealPlan = this.fetchMealPlan.bind(this);
+    }
+    componentDidMount() {
+        this.fetchMealPlan()
     }
     fetchMealPlan() {
         var req = `https://api.spoonacular.com/mealplanner/generate?timeFrame=day&targetCalories=${this.state.calories}&apiKey=32a96cb976764a9689a12cbc67d0ab2c`
@@ -28,15 +33,38 @@ class CurrentUserInfo extends React.Component {
                 console.log(error)
             });
     }
-    componentDidMount() {
-        this.fetchMealPlan()
-    }
-
     calculateCalories(user) {
         var genderAdjuster = parseInt(user.gender);
         var adjustCalorieToGoal = user.goalweight / user.weight;
         var BMR = ((4.536 * user.weight) + (15.88 * user.height) - (5 * user.age) + genderAdjuster) * user.activitylevel;
         return Math.round(BMR * adjustCalorieToGoal);
+    }
+    calculateGramsOfProtien(user, calories) {
+        var caloriesInOneGramOfProtein = 4
+        var gramsOfProtein = user.weight
+        if (user.weight > user.goalweight) {
+            gramsOfProtein = calories*.4/caloriesInOneGramOfProtein
+        }
+        if (user.weight === user.goalweight) {
+            gramsOfProtein = calories*.25/caloriesInOneGramOfProtein
+        }
+        return Math.round(gramsOfProtein);
+    }
+    calculateCaloriesFromFat(user, calories) {
+        var caloriesFromFat = (calories)*.3
+        var caloriesInOneGramOfFat = 9
+        if (user.weight > user.goalweight) {
+            caloriesFromFat = (calories)*.2
+        }
+        return Math.round(caloriesFromFat/caloriesInOneGramOfFat);
+    }
+    calculateCaloriesFromCarbs(calories, protein, fat) {
+        var caloriesInOneGramOfProtein = 4;
+        var caloriesInOneGramOfFat = 9
+        var caloriesInOneGramOfCarbs = 4
+        var totalCalories = calories
+        var carbs = totalCalories - (protein*caloriesInOneGramOfProtein) - (fat*caloriesInOneGramOfFat)
+        return Math.round(carbs/caloriesInOneGramOfCarbs);
     }
     handleChange(event) {
         this.setState({
@@ -59,18 +87,21 @@ class CurrentUserInfo extends React.Component {
     render() {
         return (
             <div>
-                <button onClick={() => { this.props.setCurrentUser() }}>Return to user selection</button>
+                <div id="showUsers">
+                <button id="showUsers" onClick={() => { this.props.setCurrentUser() }}>Return to user selection</button>
+                </div>
+                <div id="userInfo">
                 <div>
-                    Welcome {this.props.currentUser.username}
+                    Welcome {this.props.currentUser.username},
                 </div>
                 <div>
-                    Your last recorded weight was {this.props.currentUser.weight}lbs
+                    Your last recorded weight was {this.props.currentUser.weight}lbs.
                 </div>
                 <div>
-                    Your goal weight is {this.props.currentUser.goalweight}lbs
+                    Your goal weight is {this.props.currentUser.goalweight}lbs.
                 </div>
                 <div>
-                    Your daily caloric goal is  {this.state.calories}
+                    Your daily caloric goal is  {this.state.calories}.
                 </div>
                 <div>
                     <input name='updatedWeight' type="number" placeholder='Current weight' onChange={this.handleChange} />
@@ -78,15 +109,16 @@ class CurrentUserInfo extends React.Component {
                 <div>
                     <button onClick={() => { this.handleClick(this.props.currentUser, this.state) }}> Update your weight </button>
                 </div>
+                </div>
                 {this.props.currentUserWeight &&
-                    <div>
-                        <WeightGraph currentUserWeight={this.props.currentUserWeight} />
+                    <div id="lineGraph">
+                        <WeightGraph currentUser={this.props.currentUser} currentUserWeight={this.props.currentUserWeight} />
                     </div>
                 }
-                <div>
-                    <CaloriePieChart calories={this.state.calories} currentUser={this.props.currentUser} />
+                <div id = "pieChart">
+                    <CaloriePieChart carbs = {this.state.carbs} fat={this.state.fat} calories={this.state.calories} protein={this.state.protein} currentUser={this.props.currentUser} />
                 </div>
-                <div>
+                <div id="mealPlan">
                     <MealPlan mealPlan = {this.state.mealPlan} />
                 </div>
             </div>

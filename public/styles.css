@@ -148,3 +148,13 @@
     cursor: pointer;
     font-size: 20px;   
 }
+#mealInfo{
+    margin-left: 210px;
+    margin-top: -200px;
+    position: absolute;
+}
+#mealImage {
+    background: none;
+    max-width: 100%;
+    max-height: 100%;
+}

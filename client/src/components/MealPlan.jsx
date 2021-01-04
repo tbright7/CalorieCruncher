@@ -1,11 +1,24 @@
 import React from 'react';
+import NutritionWidget from './NutritionWidget.jsx';
 
 class MealPlan extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-        }
-
+        this.state = {}
+    }
+    fetchNutritionWidget(id) {
+        // var req = `https://api.spoonacular.com/mealplanner/generate?timeFrame=week&targetCalories=${this.state.calories}&apiKey=32a96cb976764a9689a12cbc67d0ab2c`
+        // var req = `https://api.spoonacular.com/recipes/complexSearch?minCarbs=${(this.state.carbs/3)-30}&maxCarbs=${(this.state.carbs/3)+30}&minFat=${(this.state.fat/3)-10}&maxFat=${(this.state.fat/3)+10}&minProtein=${(this.state.protein)-20}&maxProtein=${(this.state.protein/3)+30}&maxCalories=${(this.state.calories/3)+300}&number=3&apiKey=32a96cb976764a9689a12cbc67d0ab2c`
+        var req = `https://api.spoonacular.com/recipes/${id}/nutritionWidget?apiKey=32a96cb976764a9689a12cbc67d0ab2c`
+        axios.get(req)
+            .then(({ data }) => {
+                this.setState({
+                    nutritionWidget: data
+                })
+            })
+            .catch((error) => {
+                console.log(error)
+            });
     }
     render() {
         return (
@@ -13,21 +26,26 @@ class MealPlan extends React.Component {
                 Today's Meals:
                 {this.props.mealPlan !== undefined &&
                     <div>
-                        <ul className="meals">
-                            {this.props.mealPlan.meals.map((meal) => (
-                                <li key={meal.id}>
-                                    <a href={meal.sourceUrl}>
-                                        <div> {meal.title} </div>
-                                    </a>
-                                    <div> Preperation Time: {meal.readyInMinutes} minutes</div>
-                                    <div> Servings: {meal.servings} </div>
-                                </li>
+                        <div className="meals">
+                            {this.props.mealPlan.results.map((meal) => (
+                                <div id="mealImage" key={meal.id}>
+                                    <img src={meal.image} height="190.3" width="190.3" />
+                                    <div id="mealInfo">
+                                        <a href={meal.sourceUrl}>
+                                            <div> {meal.title} </div>
+                                        </a>
+                                        <div> Total calories: {Math.round(meal.nutrition.nutrients[0].amount)}  </div>
+                                        <div> Protien: {Math.round(meal.nutrition.nutrients[1].amount)} Grams </div>
+                                        <div> Carbs: {Math.round(meal.nutrition.nutrients[3].amount)} Grams</div>
+                                        <div> Fat: {Math.round(meal.nutrition.nutrients[2].amount)} Grams</div>
+                                        <div> Prep time: {meal.readyInMinutes} minutes</div>
+                                        {/* <NutritionWidget id={meal.id} /> */}
+                                        <div> </div>
+
+                                    </div>
+                                </div>
                             ))}
-                        </ul>
-                        <div> Total Calories: {this.props.mealPlan.nutrients.calories} </div>
-                        <div> Grams of protein: {this.props.mealPlan.nutrients.protein} </div>
-                        <div> Grams of carbs: {this.props.mealPlan.nutrients.carbohydrates} </div>
-                        <div> Grams of fat: {this.props.mealPlan.nutrients.fat} </div>
+                        </div>
                     </div>
                 }
             </div>

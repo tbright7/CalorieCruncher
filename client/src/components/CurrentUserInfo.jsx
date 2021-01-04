@@ -22,12 +22,14 @@ class CurrentUserInfo extends React.Component {
         this.fetchMealPlan()
     }
     fetchMealPlan() {
-        var req = `https://api.spoonacular.com/mealplanner/generate?timeFrame=day&targetCalories=${this.state.calories}&apiKey=32a96cb976764a9689a12cbc67d0ab2c`
+        // var req = `https://api.spoonacular.com/mealplanner/generate?timeFrame=week&targetCalories=${this.state.calories}&apiKey=32a96cb976764a9689a12cbc67d0ab2c`
+        // var req = `https://api.spoonacular.com/recipes/complexSearch?minCarbs=${(this.state.carbs/3)-30}&maxCarbs=${(this.state.carbs/3)+30}&minFat=${(this.state.fat/3)-10}&maxFat=${(this.state.fat/3)+10}&minProtein=${(this.state.protein)-20}&maxProtein=${(this.state.protein/3)+30}&maxCalories=${(this.state.calories/3)+300}&number=3&apiKey=32a96cb976764a9689a12cbc67d0ab2c`
+        var req = `https://api.spoonacular.com/recipes/complexSearch?&maxFat=${(this.state.fat / 3) + 15}&minProtein=${(this.state.protein / 3) - 15}&minCalories=${(this.state.calories / 3) - 200}&addRecipeNutrition=true&number=3&apiKey=32a96cb976764a9689a12cbc67d0ab2c`
         axios.get(req)
             .then(({ data }) => {
                 this.setState({
                     mealPlan: data
-                }, () => {console.log(this.state.mealPlan)})
+                })
             })
             .catch((error) => {
                 console.log(error)
@@ -43,28 +45,28 @@ class CurrentUserInfo extends React.Component {
         var caloriesInOneGramOfProtein = 4
         var gramsOfProtein = user.weight
         if (user.weight > user.goalweight) {
-            gramsOfProtein = calories*.4/caloriesInOneGramOfProtein
+            gramsOfProtein = calories * .4 / caloriesInOneGramOfProtein
         }
         if (user.weight === user.goalweight) {
-            gramsOfProtein = calories*.25/caloriesInOneGramOfProtein
+            gramsOfProtein = calories * .25 / caloriesInOneGramOfProtein
         }
         return Math.round(gramsOfProtein);
     }
     calculateCaloriesFromFat(user, calories) {
-        var caloriesFromFat = (calories)*.3
+        var caloriesFromFat = (calories) * .3
         var caloriesInOneGramOfFat = 9
         if (user.weight > user.goalweight) {
-            caloriesFromFat = (calories)*.2
+            caloriesFromFat = (calories) * .2
         }
-        return Math.round(caloriesFromFat/caloriesInOneGramOfFat);
+        return Math.round(caloriesFromFat / caloriesInOneGramOfFat);
     }
     calculateCaloriesFromCarbs(calories, protein, fat) {
         var caloriesInOneGramOfProtein = 4;
         var caloriesInOneGramOfFat = 9
         var caloriesInOneGramOfCarbs = 4
         var totalCalories = calories
-        var carbs = totalCalories - (protein*caloriesInOneGramOfProtein) - (fat*caloriesInOneGramOfFat)
-        return Math.round(carbs/caloriesInOneGramOfCarbs);
+        var carbs = totalCalories - (protein * caloriesInOneGramOfProtein) - (fat * caloriesInOneGramOfFat)
+        return Math.round(carbs / caloriesInOneGramOfCarbs);
     }
     handleChange(event) {
         this.setState({
@@ -88,38 +90,45 @@ class CurrentUserInfo extends React.Component {
         return (
             <div>
                 <div id="showUsers">
-                <button id="showUsers" onClick={() => { this.props.setCurrentUser() }}>Return to user selection</button>
+                    <button id="showUsers" onClick={() => { this.props.setCurrentUser() }}>Return to user selection</button>
                 </div>
                 <div id="userInfo">
-                <div>
-                    Welcome {this.props.currentUser.username},
+                    <div>
+                        Welcome {this.props.currentUser.username},
                 </div>
-                <div>
-                    Your last recorded weight was {this.props.currentUser.weight}lbs.
+                    <div>
+                        Your last recorded weight was {this.props.currentUser.weight}lbs.
                 </div>
-                <div>
-                    Your goal weight is {this.props.currentUser.goalweight}lbs.
+                    <div>
+                        Your goal weight is {this.props.currentUser.goalweight}lbs.
                 </div>
-                <div>
-                    Your daily caloric goal is  {this.state.calories}.
+                    <div>
+                        Your daily caloric goal is  {this.state.calories}.
                 </div>
-                <div>
-                    <input name='updatedWeight' type="number" placeholder='Current weight' onChange={this.handleChange} />
-                </div>
-                <div>
-                    <button onClick={() => { this.handleClick(this.props.currentUser, this.state) }}> Update your weight </button>
-                </div>
+                    <div>
+                        <input 
+                        name='updatedWeight' 
+                        className="fieldInput"
+                        type="number" 
+                        placeholder='Current weight' 
+                        onChange={this.handleChange} />
+                    </div>
+                    <div>
+                        <button id="button" 
+                        onClick={() => { this.handleClick(this.props.currentUser, this.state) }}> 
+                        Update weight</button>
+                    </div>
                 </div>
                 {this.props.currentUserWeight &&
                     <div id="lineGraph">
                         <WeightGraph currentUser={this.props.currentUser} currentUserWeight={this.props.currentUserWeight} />
                     </div>
                 }
-                <div id = "pieChart">
-                    <CaloriePieChart carbs = {this.state.carbs} fat={this.state.fat} calories={this.state.calories} protein={this.state.protein} currentUser={this.props.currentUser} />
+                <div id="pieChart">
+                    <CaloriePieChart carbs={this.state.carbs} fat={this.state.fat} calories={this.state.calories} protein={this.state.protein} currentUser={this.props.currentUser} />
                 </div>
                 <div id="mealPlan">
-                    <MealPlan mealPlan = {this.state.mealPlan} />
+                    <MealPlan mealPlan={this.state.mealPlan} />
                 </div>
             </div>
         )

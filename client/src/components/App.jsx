@@ -133,9 +133,10 @@ class App extends React.Component {
             .then(() => {
                 this.fetchUsers();
                 this.setState({
-                    currentUser: user
+                    currentUser: user,
+                
                 })
-            })
+        })
     }
     setCurrentUser(user) {
         if (user) {
@@ -198,7 +199,8 @@ class App extends React.Component {
                         setCurrentUser={this.setCurrentUser} 
                         currentUserWeight={this.state.currentUserWeight} 
                         currentUser={this.state.currentUser} 
-                        updateCurrentUserWeight={this.updateCurrentUserWeight} />
+                        updateCurrentUserWeight={this.updateCurrentUserWeight}
+                        />
                     </div>
                 }
                 {this.state.updateProfile !== false &&

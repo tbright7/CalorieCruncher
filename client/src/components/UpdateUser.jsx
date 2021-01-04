@@ -61,9 +61,15 @@ class UpdateUser extends React.Component {
                         </div>
                     </div>
                 }
-                <button id ="button" onClick={this.handleClick}>Update User</button>
+                <button 
+                id ="button" 
+                onClick={this.handleClick}>
+                Update User</button>
                 <div>
-                <button id ="button" onClick={() => { this.props.updateProfile() }}> Cancel</button>
+                <button 
+                id ="button" 
+                onClick={() => { this.props.updateProfile() }}> 
+                Cancel</button>
                 </div>
             </div>
         )

@@ -17,13 +17,12 @@ class CurrentUserInfo extends React.Component {
         this.handleClick = this.handleClick.bind(this);
         this.updateProfile = this.updateProfile.bind(this);
         this.fetchMealPlan = this.fetchMealPlan.bind(this);
+        this.bmiCalculator = this.bmiCalculator.bind(this)
     }
     componentDidMount() {
         this.fetchMealPlan()
     }
     fetchMealPlan() {
-        // var req = `https://api.spoonacular.com/mealplanner/generate?timeFrame=week&targetCalories=${this.state.calories}&apiKey=32a96cb976764a9689a12cbc67d0ab2c`
-        // var req = `https://api.spoonacular.com/recipes/complexSearch?minCarbs=${(this.state.carbs/3)-30}&maxCarbs=${(this.state.carbs/3)+30}&minFat=${(this.state.fat/3)-10}&maxFat=${(this.state.fat/3)+10}&minProtein=${(this.state.protein)-20}&maxProtein=${(this.state.protein/3)+30}&maxCalories=${(this.state.calories/3)+300}&number=3&apiKey=32a96cb976764a9689a12cbc67d0ab2c`
         var req = `https://api.spoonacular.com/recipes/complexSearch?&maxFat=${(this.state.fat / 3) + 15}&minProtein=${(this.state.protein / 3) - 15}&minCalories=${(this.state.calories / 3) - 200}&addRecipeNutrition=true&number=3&apiKey=32a96cb976764a9689a12cbc67d0ab2c`
         axios.get(req)
             .then(({ data }) => {
@@ -85,52 +84,74 @@ class CurrentUserInfo extends React.Component {
             updateProfile: true
         });
     }
+    bmiCalculator() {
+        var bmi = Math.round((this.props.currentUser.weight / Math.pow(this.props.currentUser.height, 2)) * 703 * 10) / 10
+        if (bmi < 18.5) {
+            return `Your BMI is ${bmi} which is underweight.`
+        }
+        if (bmi >= 18.5 && bmi < 24.9) {
+            return `Your BMI is ${bmi} which is normal.`
+        }
+        if (bmi >= 25 && bmi < 29.9) {
+            return `Your BMI is ${bmi} which is overweight.`
+        }
+        if (bmi >= 30) {
+            return `Your BMI is ${bmi} which is obese.`
+        }
+    }
 
     render() {
         return (
             <div>
                 <div id="showUsers">
-                    <button id="showUsers" onClick={() => { this.props.setCurrentUser() }}>Return to user selection</button>
+                    <button id="showUsers" onClick={() => { this.props.setCurrentUser() }}>Return to home screen</button>
                 </div>
                 <div id="userInfo">
-                    <div>
+                    <div className="info">
                         Welcome {this.props.currentUser.username},
-                </div>
-                    <div>
-                        Your last recorded weight was {this.props.currentUser.weight}lbs.
-                </div>
-                    <div>
+                    </div>
+                    {this.props.currentUserWeight &&
+
+                        <div className="info" key={this.props.currentUserWeight[this.props.currentUserWeight.length - 1].weight}>
+                            Your last recorded weight was {this.props.currentUserWeight[this.props.currentUserWeight.length - 1].weight}lbs. {"\n"}
+                        </div>
+                    }
+                    <div className="info">
+                        {this.bmiCalculator()}
+                    </div>
+                    <div className="info">
                         Your goal weight is {this.props.currentUser.goalweight}lbs.
+                    </div>
+                    <div className="info">
+                        Your daily caloric goal is  {this.state.calories}kcal.
+
                 </div>
-                    <div>
-                        Your daily caloric goal is  {this.state.calories}.
-                </div>
-                    <div>
-                        <input 
-                        name='updatedWeight' 
+                <div>
+                    <input
+                        name='updatedWeight'
                         className="fieldInput"
-                        type="number" 
-                        placeholder='Current weight' 
+                        type="number"
+                        placeholder='Current weight'
                         onChange={this.handleChange} />
-                    </div>
-                    <div>
-                        <button id="button" 
-                        onClick={() => { this.handleClick(this.props.currentUser, this.state) }}> 
+                </div>
+                <div>
+                    <button id="button"
+                        onClick={() => { this.handleClick(this.props.currentUser, this.state) }}>
                         Update weight</button>
-                    </div>
-                </div>
-                {this.props.currentUserWeight &&
-                    <div id="lineGraph">
-                        <WeightGraph currentUser={this.props.currentUser} currentUserWeight={this.props.currentUserWeight} />
-                    </div>
-                }
-                <div id="pieChart">
-                    <CaloriePieChart carbs={this.state.carbs} fat={this.state.fat} calories={this.state.calories} protein={this.state.protein} currentUser={this.props.currentUser} />
-                </div>
-                <div id="mealPlan">
-                    <MealPlan mealPlan={this.state.mealPlan} />
                 </div>
             </div>
+            {this.props.currentUserWeight &&
+                <div id="lineGraphWidget" key={this.props.currentUserWeight}>
+                    <WeightGraph currentUser={this.props.currentUser} currentUserWeight={this.props.currentUserWeight} />
+                </div>
+            }
+            <div id="pieChartWidget" key={this.state.calories}>
+                <CaloriePieChart carbs={this.state.carbs} fat={this.state.fat} calories={this.state.calories} protein={this.state.protein} currentUser={this.props.currentUser} />
+            </div>
+            <div id="mealPlanWidget">
+                <MealPlan mealPlan={this.state.mealPlan} />
+            </div>
+        </div>
         )
     }
 }

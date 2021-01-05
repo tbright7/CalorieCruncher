@@ -21,11 +21,12 @@ class WeightGraph extends React.Component {
 
     render() {
         return (
-            <div id ="lineGraph">
+            <div id ="graph">
                 {this.props.currentUserWeight !== undefined &&
                     <Chart
-                    width={'500px'}
-                    height={'300px'}
+                    id="graph"
+                    width={'480px'}
+                    height={'280px'}
                         chartType="LineChart"
                         loader={<div>Loading Chart</div>}
                         data={this.populateData()}
@@ -38,12 +39,9 @@ class WeightGraph extends React.Component {
                             vAxis: {
                                 title: 'Weight in lbs',
                             },
-                            backgroundColor: '#3ba3c2',
+                            backgroundColor: 'none',
                             strokeWidth: 1,
-                            // x-radius of the corner curvature.
-                            rx: 10,
-                            // y-radius of the corner curvature.
-                            ry: 10,
+                            
                         }}
                         rootProps={{ 'data-testid': '1' }}
                     />

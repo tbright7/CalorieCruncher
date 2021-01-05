@@ -131,10 +131,9 @@ class App extends React.Component {
             weight: updatedWeight
         })
             .then(() => {
-                this.fetchUsers();
+                this.fetchWeight(user);
                 this.setState({
                     currentUser: user,
-                
                 })
         })
     }
@@ -174,7 +173,7 @@ class App extends React.Component {
             <div id="body">
                 {this.state.currentUser === null &&
                     this.state.users.length > 0 &&
-                    <div id="userList">
+                    <div id="userListWidget">
                         <UsersList 
                         users={this.state.users} 
                         setCurrentUser={this.setCurrentUser} 
@@ -185,7 +184,7 @@ class App extends React.Component {
                 }
                 {this.state.currentUser === null &&
                     this.state.updateProfile === false &&
-                    <div id="addUser">
+                    <div className="modifyUserWidget">
                         <AddUser 
                         adduser={this.addUser}
                         activityLevels={this.state.activityLevels} 
@@ -194,7 +193,7 @@ class App extends React.Component {
 
                 }
                 {this.state.currentUser !== null &&
-                    <div id="currentUserInfo">
+                    <div id="currentUserInfoWidget">
                         <CurrentUserInfo 
                         setCurrentUser={this.setCurrentUser} 
                         currentUserWeight={this.state.currentUserWeight} 
@@ -204,7 +203,7 @@ class App extends React.Component {
                     </div>
                 }
                 {this.state.updateProfile !== false &&
-                    <div id="updateUser">
+                    <div className="modifyUserWidget">
                         <UpdateUser 
                         updateProfile={this.updateProfile} 
                         updateUser={this.updateUser} 

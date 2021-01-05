@@ -1,3 +1,16 @@
+#body{
+    background-color: #338ea9	;
+    position: absolute;
+    top: 0px;
+    bottom: 0px; 
+    left: 0px;
+    right: 0px;
+    width: 100%;
+    font-size: 20px;   
+    font-family: arial;
+
+}
+/* buttons and input */
 #button{
     box-shadow: 3px 4px 0px 0px #899599;
 	background:linear-gradient(to bottom, #ededed 5%, #bab1ba 100%);
@@ -8,7 +21,7 @@
 	cursor:pointer;
 	color: black;
 	font-family:Arial;
-	font-size:17px;
+	font-size:16px;
 	padding:7px 25px;
 	text-decoration:none;
     text-shadow:0px 1px 0px #e1e2ed;
@@ -32,91 +45,11 @@
     height: 50px;
     font-size: 20px;
     font-family: arial;
+    padding-left: 5px;
+    cursor:pointer;
 }
 #showUsers:hover{
     font-weight: 900;
-}
-#body{
-    background-color: #338ea9	;
-    position: absolute;
-    top: 0px;
-    bottom: 0px; 
-    left: 0px;
-    right: 0px;
-    width: 100%;
-    font-size: 20px;   
-    font-family: arial;
-
-}
-#lineGraph {
-    position: absolute;
-  margin-left: 465px;
- margin-top: -70px;
- border-radius: 10px;
-}
-#pieChart {
-    margin-left: 465px;
-    margin-top: 85px;
-    position: absolute;
-}
-#mealPlan{
-    margin-left: 440px;
-    width: 480px;
-    background-color: #3ba3c2;
-    position: absolute;
-    margin-top: -140px;
-}
-#userInfo{
-    background-color: #3ba3c2;
-    margin-top: 10px;
-    width: 420px;
-    margin-left:10px;
-}
-#addUser{
-    margin-top: 200px;
-    display: flex;
-    justify-content: center;
-}
-#updateUser{
-    margin-top: 200px;
-    display: flex;
-    justify-content: center;
-}
-#userListUsername{
-    border-radius: 0px;
-    border: none;
-    width: 100px;
-    font-size: 16px;
-    margin-bottom: 0px;
-    background: none;
-}
-#userListUsername:hover{
-    font-weight: 900;
-}
-#userListUpdate{
-    border-radius: 0px;
-    border: none;
-    font-size: 16px;
-    margin-bottom: 0px;
-    background: none;
-}
-#userListUpdate:hover{
-    font-weight: 900;
-}
-#userListDelete{
-    border-radius: 0px;
-    border: none;
-    font-size: 16px;
-    margin-bottom: 0px;
-    background: none;
-}
-#userListDelete:hover{
-    font-weight: 900;
-}
-#list {
-    background:linear-gradient(to bottom, #37bcf3 5%, #3799b6 100%);
-    width: 330px;
-    z-index: 5;
 }
 .fieldInput{
     padding: 5px;
@@ -132,11 +65,6 @@
      margin-bottom: 2px;
      width:160px;
      outline:none;
-
-}
-.fieldInput:focus{
-    outline:none;
-
 }
 #gender{
     font-family: arial;
@@ -145,16 +73,93 @@
     padding-left: 5px;
     margin-bottom: 5px;
     padding-top: 5px;
-    cursor: pointer;
     font-size: 20px;   
+}
+#userListUsername{
+    width: 100px;
+}
+.userListItem{
+    border-radius: 0px;
+    border: none;
+    font-size: 16px;
+    margin-bottom: 0px;
+    background: none;
+    cursor:pointer;
+}
+.userListItem:hover{
+    font-weight: 900;
+}
+
+/* end of buttons and inputs */
+/* widgets */
+.modifyUserWidget{
+    margin-top: 200px;
+    display: flex;
+    justify-content: center;
+}
+#mealPlanWidget{
+    margin-left: 440px;
+    width: 475px;
+    background: radial-gradient(circle, #3799b6 20%, #37bcf3 100%);
+    position: absolute;
+    margin-top: -235px;
+    padding-left: 5px;
+    border-radius: 10px;
+}
+#pieChartWidget {
+    margin-left: 930px;
+    margin-top: 74px;
+    position: absolute;
+    border-radius: 10px;
+    background: radial-gradient(circle, #3799b6 20%, #37bcf3 100%);
+    width: 500px;
+    height: 300px;
+}
+#lineGraphWidget {
+    position: absolute;
+    margin-left: 930px;
+    margin-top: -235px;
+    border-radius: 10px;
+    width: 500px;
+    height: 300px;
+    background-color: #3ba3c2;
+    background: radial-gradient(circle, #3799b6 20%, #37bcf3 100%)
+   }
+/*end of widgets*/
+/* current user info */
+#userInfo{
+    background: radial-gradient(circle, #3799b6 20%, #37bcf3 100%);
+    margin-top: 10px;
+    width: 400px;
+    margin-left:10px;
+    padding: 10px;
+    border-radius: 10px;
+}
+#list {
+    background:linear-gradient(to bottom, #37bcf3 5%, #3799b6 100%);
+    width: 330px;
+    position:absolute;
+}
+#mealPlan{
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 #mealInfo{
     margin-left: 210px;
-    margin-top: -200px;
+    margin-top: -180px;
     position: absolute;
+}
+.mealItem{
+    padding-top: 3px;
+    font-size:16px;
 }
 #mealImage {
     background: none;
     max-width: 100%;
     max-height: 100%;
+    padding-left:5px;
+}
+.info{
+    padding-bottom: 5px;
+    padding-left: 5px;
 }

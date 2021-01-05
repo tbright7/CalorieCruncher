@@ -11,10 +11,10 @@ class CaloriePieChart extends React.Component {
 
     render() {
         return (
-            <div id="pieChart">
+            <div id="graph">
                 <Chart
-                    width={'500px'}
-                    height={'300px'}
+                    width={'480px'}
+                    height={'280px'}
                     chartType="PieChart"
                     loader={<div>Loading Chart</div>}
                     data={[
@@ -26,7 +26,8 @@ class CaloriePieChart extends React.Component {
                     options={{
                         title: 'Ideal Macronutrient Breakdown',
                         pieSliceText: 'value',
-                        backgroundColor: '#3ba3c2'
+                        backgroundColor: 'none',
+                        borderRadius: "100"
 
                     }}
                     rootProps={{ 'data-testid': '1' }}

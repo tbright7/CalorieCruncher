@@ -116,42 +116,51 @@ class CurrentUserInfo extends React.Component {
                             Your last recorded weight was {this.props.currentUserWeight[this.props.currentUserWeight.length - 1].weight}lbs. {"\n"}
                         </div>
                     }
-                    <div className="info">
+                    <div className="info" key={this.bmiCalculator()}>
                         {this.bmiCalculator()}
                     </div>
+
                     <div className="info">
                         Your goal weight is {this.props.currentUser.goalweight}lbs.
                     </div>
-                    <div className="info">
-                        Your daily caloric goal is  {this.state.calories}kcal.
+                    <div className="info" key={this.state.calories}>
+                        Your daily caloric goal is  {this.state.calories} kcal.
 
                 </div>
-                <div>
-                    <input
-                        name='updatedWeight'
-                        className="fieldInput"
-                        type="number"
-                        placeholder='Current weight'
-                        onChange={this.handleChange} />
+                    <div>
+                        <input
+                            name='updatedWeight'
+                            className="fieldInput"
+                            type="number"
+                            placeholder='Current weight'
+                            onChange={this.handleChange} />
+                    </div>
+                    <div>
+                        <button id="button"
+                            onClick={() => { this.handleClick(this.props.currentUser, this.state) }}>
+                            Update weight</button>
+                    </div>
                 </div>
-                <div>
-                    <button id="button"
-                        onClick={() => { this.handleClick(this.props.currentUser, this.state) }}>
-                        Update weight</button>
-                </div>
-            </div>
-            {this.props.currentUserWeight &&
                 <div id="lineGraphWidget" key={this.props.currentUserWeight}>
-                    <WeightGraph currentUser={this.props.currentUser} currentUserWeight={this.props.currentUserWeight} />
+                    <WeightGraph
+                        currentUser={this.props.currentUser}
+                        currentUserWeight={this.props.currentUserWeight} />
                 </div>
-            }
-            <div id="pieChartWidget" key={this.state.calories}>
-                <CaloriePieChart carbs={this.state.carbs} fat={this.state.fat} calories={this.state.calories} protein={this.state.protein} currentUser={this.props.currentUser} />
+
+                {this.props.currentUserWeight &&
+                    <div id="pieChartWidget" key={this.props.currentUserWeight[this.props.currentUserWeight.length - 1].weight + 2}>
+                        <CaloriePieChart
+                            carbs={this.calculateCaloriesFromCarbs(this.calculateCalories(this.props.currentUser), this.calculateGramsOfProtien(this.props.currentUser, this.calculateCalories(this.props.currentUser)), this.calculateCaloriesFromFat(this.props.currentUser, this.calculateCalories(this.props.currentUser)))}
+                            fat={this.calculateCaloriesFromFat(this.props.currentUser, this.calculateCalories(this.props.currentUser))}
+                            calories={this.calculateCalories(this.props.currentUser)}
+                            protein={this.calculateGramsOfProtien(this.props.currentUser, this.calculateCalories(this.props.currentUser))}
+                            currentUser={this.props.currentUser} />
+                    </div>
+                }
+                <div id="mealPlanWidget">
+                    <MealPlan mealPlan={this.state.mealPlan} />
+                </div>
             </div>
-            <div id="mealPlanWidget">
-                <MealPlan mealPlan={this.state.mealPlan} />
-            </div>
-        </div>
         )
     }
 }

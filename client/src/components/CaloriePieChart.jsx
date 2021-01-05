@@ -11,7 +11,7 @@ class CaloriePieChart extends React.Component {
 
     render() {
         return (
-            <div id="graph">
+            <div id="graph" key={this.props.protein}>
                 <Chart
                     width={'480px'}
                     height={'280px'}

@@ -24,7 +24,7 @@ class CurrentUserInfo extends React.Component {
     }
     fetchMealPlan() {
         var api = 'FILL_ME_IN'
-        var req = `https://api.spoonacular.com/recipes/complexSearch?&maxFat=${(this.state.fat / 3) + 15}&minProtein=${(this.state.protein / 3) - 15}&minCalories=${(this.state.calories / 3) - 200}&addRecipeNutrition=true&number=3&apiKey=${api}`
+        var req = `https://api.spoonacular.com/recipes/complexSearch?&maxFat=${(this.state.fat / 3) + 25}&minProtein=${(this.state.protein / 3) - 15}&minCalories=${(this.state.calories / 3) - 200}&addRecipeNutrition=true&number=3&apiKey=${api}`
         axios.get(req)
             .then(({ data }) => {
                 this.setState({

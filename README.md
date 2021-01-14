@@ -8,7 +8,7 @@ I wanted to build this app as a way for users to understand the caloric breakdow
 **Home Screen**
 ![Alt text](/Screen%20Shot%202021-01-04%20at%205.29.15%20PM.png?raw=true "Home Screen")
 **User Dashboard**
-![Alt text](/Screen%20Shot%202021-01-04%20at%205.29.43%20PM.png?raw=true "User Dashboarde")
+![Alt text](/Screen%20Shot%202021-01-04%20at%205.29.43%20PM.png?raw=true "User Dashboard")
 
 #### Installation
 npm install  

@@ -12,7 +12,6 @@ I wanted to build this app as a way for users to understand the caloric breakdow
 
 #### Installation
 npm install  
-Install PostgreSQL if not already installed  
 Obtain API key from https://spoonacular.com/food-api  
 Fill in API on /client/src/components/CurrentUserInfo.jsx line 26  
 npm run build  
